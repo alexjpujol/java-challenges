@@ -15,4 +15,12 @@ public class Contact {
         return "Name: " + this.name + ", Phone Number: " + this.phoneNumber;
     }
 
+    public String getName() {
+        return name;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
 }

@@ -5,12 +5,12 @@ import java.util.Scanner;
 public class RunIt {
 
     static Scanner scanner = new Scanner(System.in);
-    static MobilePhone mobilePhone = new MobilePhone();
+   // static MobilePhone mobilePhone = new MobilePhone();
 
     public static void main(String[] args) {
 
-        mobilePhone.storeContact("Alex", "510-847-4091");
-        mobilePhone.storeContact("Marc", "510-847-3462");
+        MobilePhone mobilePhone = new MobilePhone();
+
         mobilePhone.queryContact("baba");
         mobilePhone.showContacts();
 
@@ -30,7 +30,8 @@ public class RunIt {
                     scanner.nextLine();
                     System.out.println("Now enter the number:");
                     String number = scanner.next();
-                    mobilePhone.storeContact(name, number);
+                    Contact contact1 = new Contact(name, number);
+                    mobilePhone.storeContact(contact1);
                     break;
                 case 2:
                     mobilePhone.showContacts();
@@ -45,7 +46,7 @@ public class RunIt {
                     mobilePhone.modifyContact(updateName, updateNumber);
                     break;
                 case 4:
-                    System.out.println("Enter the name or number of the contact to search:");
+                    System.out.println("Enter the name of the contact to search:");
                     String search = scanner.next();
                     scanner.nextLine();
                     mobilePhone.queryContact(search);

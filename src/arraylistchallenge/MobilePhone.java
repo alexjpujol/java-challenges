@@ -5,38 +5,63 @@ import java.util.Objects;
 
 public class MobilePhone {
 
-    private ArrayList<Contact> contacts = new ArrayList<Contact>();
+    private ArrayList<Contact> contacts;
     private String[] options = {"1: Add new contact\n", "2: Print all contacts\n", "3: Update an existing contact\n", "4: Search a contact\n",
     "5: Delete a Contact\n", "6: Quit\n"};
 
-    public void storeContact(String name, String phoneNumber) {
-        Contact contact = new Contact(name, phoneNumber);
+    MobilePhone() {
+        this.contacts = new ArrayList<Contact>();
+    }
+
+    private int findContact(Contact contact) {
+        return this.contacts.indexOf(contact);
+    }
+
+    private int findContact(String name) {
+        for (int i = 0; i < this.contacts.size(); i++) {
+            if (this.contacts.get(i).name.equals(name)) {
+                return i;
+            }
+        }
+        return -1;
+    }
+
+    public boolean storeContact(Contact contact) {
+
+        if (findContact(contact.getName()) >= 0) {
+            System.out.println("Contact already in phone!");
+            return false;
+        }
         contacts.add(contact);
         System.out.println("Contact successfully added");
+        return true;
     }
 
-    public void modifyContact(String contact, String newData) {
-        for (int i = 0; i < contacts.size(); i++) {
-            Contact temp = contacts.get(i);
-            if (Objects.equals(temp.name, contact) || Objects.equals(temp.phoneNumber, contact)) {
-                contacts.get(i).phoneNumber = newData;
-                System.out.println("Contact modified!");
-                return;
-            }
+    public boolean modifyContact(String oldName, String newNumber) {
+
+        if (findContact(oldName) == -1) {
+            System.out.println("Contact doesn't exist!");
+            return false;
+        } else {
+            int index = findContact(oldName);
+            Contact oldEntry = contacts.get(index);
+            oldEntry.phoneNumber = newNumber;
+            System.out.println("Contact updated successfully!");
+            return true;
         }
-        System.out.println("That contact doesn't exist!");
     }
 
 
-    public void queryContact(String data) {
-        for (int i = 0; i < contacts.size(); i++) {
-            Contact temp = contacts.get(i);
-            if (Objects.equals(temp.name, data) || Objects.equals(temp.phoneNumber, data)) {
-                System.out.println(temp.toString());
-                return;
-            }
+    public boolean queryContact(String data) {
+
+        if (findContact(data) == -1) {
+            System.out.println("Contact doesn't exist!");
+            return false;
+        } else {
+            Contact contact = contacts.get(findContact(data));
+            System.out.println(contact.toString());
+            return true;
         }
-        System.out.println("That contact doesn't exist!");
     }
 
     public void showContacts() {
@@ -45,15 +70,16 @@ public class MobilePhone {
         }
     }
 
-    public void deleteContact(String contact) {
-        for (int i = 0; i < contacts.size(); i++) {
-            if (Objects.equals(contacts.get(i).name, contact)) {
-                contacts.remove(i);
-                System.out.println("Contact deleted!");
-                return;
-            }
+    public boolean deleteContact(String contact) {
+
+        if (findContact(contact) == -1) {
+            System.out.println("Contact doesn't exist!");
+            return false;
+        } else {
+            contacts.remove(findContact(contact));
+            System.out.println("Contact deleted!");
+            return true;
         }
-        System.out.println("That contact doesn't exist!");
     }
 
     public void showMenu() {
