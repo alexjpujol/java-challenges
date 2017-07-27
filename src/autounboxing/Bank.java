@@ -37,11 +37,20 @@ public class Bank {
         //via an initial transaction
         Branch targetBranch = findBranch(branchName);
         if(targetBranch != null) {
-            targetBranch.newCustomer(custName, transaction);
             System.out.println(custName + " added to branch " + branchName + " with a " + transaction + " transaction value");
-            return true;
+            return targetBranch.newCustomer(custName, transaction);
         }
         System.out.println("That branch doesn't exist!");
+        return false;
+    }
+
+    public boolean addCustomerTransaction(String custName, String branchName, double value) {
+        Branch targetBranch = findBranch(branchName);
+        if(targetBranch != null) {
+            targetBranch.customerTransaction(custName, value);
+            System.out.println(custName + " recorded a transaction of " + value);
+            return targetBranch.customerTransaction(custName, value);
+        }
         return false;
     }
 
@@ -53,6 +62,19 @@ public class Bank {
             return true;
         }
         System.out.println("That branch doesn't exist!");
+        return false;
+    }
+
+    public boolean showCustTransactions(String branchName, String custName) {
+        Branch targetBranch = findBranch(branchName);
+        if (targetBranch != null) {
+            if (targetBranch.findCustomer(custName) != null) {
+                targetBranch.showCustomerTransactions(custName);
+                return true;
+            }
+            return false;
+        }
+        System.out.println("Branch doesn't exist! showCustTransactions()");
         return false;
     }
 

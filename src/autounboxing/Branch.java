@@ -51,11 +51,15 @@ public class Branch {
         return false;
     }
 
-    public void showCustomerTransactions(String custName) {
+    public boolean showCustomerTransactions(String custName) {
         Customer targetCustomer = findCustomer(custName);
-        for (int i = 0; i < targetCustomer.transactions.size(); i++) {
-            System.out.println(targetCustomer.transactions.get(i));
+        if (targetCustomer != null) {
+            for (int i = 0; i < targetCustomer.transactions.size(); i++) {
+                System.out.println(targetCustomer.transactions.get(i));
+            }
+            return true;
         }
+        return false;
     }
 
     public String getCustomerNames() {
